@@ -33,6 +33,7 @@ class Adopter(models.Model) :
   birthdate = models.DateField()
   phone = models.CharField(max_length=20)
   occupation = models.CharField(max_length=255)
+  profile_picture = models.ImageField() 
   created_at = models.DateTimeField(auto_now_add=True)
 
   def __str__(self) :
@@ -101,6 +102,7 @@ class Pet(models.Model) :
   character = models.CharField(max_length=30, choices=PET_CHARACTER, default=PLAYFUL)
   story = models.TextField(max_length=1000)
   special_needs = models.TextField(max_length=1000)
+  image = models.ImageField()
   created_at = models.DateTimeField(auto_now_add=True)
 
   # Relations
