@@ -1,4 +1,5 @@
 from django.db import models
+from versatileimagefield.fields import VersatileImageField, PPOIField
 
 ## Types of relations
 # Association --> Pet : 1 to N
@@ -8,6 +9,31 @@ from django.db import models
 # Adopter     --> AdoptionForm : 1 to N
 
 # Create your models here.
+class Address(models.Model) :
+  """ Address Model """
+  country = models.CharField(max_length=50)
+  state = models.CharField(max_length=50)
+  city = models.CharField(max_length=50)
+  zip_code = models.CharField(max_length=20)
+  neighbourhood = models.CharField(max_length=50)
+  street_and_number = models.CharField(max_length=20)
+  created_at = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self) :
+    return f'{self.street_and_number} \n {self.neighbourhood} \n {self.zip_code}, {self.city}, {self.state} \n {self.country}'
+
+class Image(models.Model) :
+  name = models.CharField(max_length=255)
+  image = VersatileImageField(
+    'Image',
+    upload_to='media/',
+    ppoi_field='image_ppoi',
+  )
+  image_ppoi = PPOIField()
+
+  def __str__(self) :
+    return self.name
+
 class Association(models.Model) :
   """ Association Model """
   email = models.EmailField(unique=True)
@@ -19,8 +45,11 @@ class Association(models.Model) :
   donation_link = models.CharField(max_length=255)
   web_address = models.CharField(max_length=255)
   story = models.TextField(max_length=1000)
-  image = models.ImageField()
   created_at = models.DateTimeField(auto_now_add=True)
+
+  # Relation
+  address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='associations')
+  image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='i_associations')
 
   def __str__(self) :
     return f'{self.name}. Contact:{self.first_name_contact} {self.last_name_contact} at {self.email_contact}'
@@ -33,28 +62,14 @@ class Adopter(models.Model) :
   birthdate = models.DateField()
   phone = models.CharField(max_length=20)
   occupation = models.CharField(max_length=255)
-  profile_picture = models.ImageField() 
   created_at = models.DateTimeField(auto_now_add=True)
+
+  #Relation
+  address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='adopters')
+  image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='i_adopters') 
 
   def __str__(self) :
     return f'{self.first_name} {self.last_name}'
-
-class Address(models.Model) :
-  """ Address Model """
-  country = models.CharField(max_length=50)
-  state = models.CharField(max_length=50)
-  city = models.CharField(max_length=50)
-  zip_code = models.CharField(max_length=20)
-  neighbourhood = models.CharField(max_length=50)
-  street_and_number = models.CharField(max_length=20)
-  created_at = models.DateTimeField(auto_now_add=True)
-
-  # Relations
-  association = models.OneToOneField(Association, on_delete=models.CASCADE, related_name='as_address')
-  adopter = models.OneToOneField(Adopter, on_delete=models.CASCADE, related_name='ad_address')
-
-  def __str__(self) :
-    return f'{self.street_and_number} \n {self.neighbourhood} \n {self.zip_code}, {self.city}, {self.state} \n {self.country}'
 
 class Pet(models.Model) :
   name = models.CharField(max_length=255)
@@ -102,12 +117,12 @@ class Pet(models.Model) :
   character = models.CharField(max_length=30, choices=PET_CHARACTER, default=PLAYFUL)
   story = models.TextField(max_length=1000)
   special_needs = models.TextField(max_length=1000)
-  image = models.ImageField()
   created_at = models.DateTimeField(auto_now_add=True)
 
   # Relations
   association = models.ForeignKey(Association, on_delete=models.PROTECT, related_name='pets')
   adopter = models.ForeignKey(Adopter, on_delete=models.PROTECT, related_name='adopter_pets')
+  image = models.ForeignKey(Image, on_delete=models.PROTECT, related_name='i_pets')
 
   def __str__(self) :
     return f'{self.name}, {self.character} {self.size} {self.gender} {self.species}'

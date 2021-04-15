@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from rest_framework import generics, filters
 from .models import Association, Adopter, Pet, Address, AdoptionForm
 
+## We import this additional model to implement the image handling
+from rest_framework.viewsets import ReadOnlyModelViewSet
+
 from .serializers import (
   # Association Serializers
   AssociationsListSerializer,
@@ -26,7 +29,18 @@ from .serializers import (
 
 # Create your views here.
 
-## Association View's
+### Image handler Views
+class AssociationsViewSet(ReadOnlyModelViewSet) :
+  queryset = Association.objects.all()
+  serializer_class = AssociationsSerializer
+class AdoptersViewSet(ReadOnlyModelViewSet) :
+  queryset = Adopter.objects.all()
+  serializer_class = AdoptersSerializer
+class PetsViewSet(ReadOnlyModelViewSet) :
+  queryset = Pet.objects.all()
+  serializer_class = PetsSerializer
+
+## Association Views
 class ListAssociationsAPIView(generics.ListAPIView) :
   queryset = Association.objects.all()
   serializer_class = AssociationsListSerializer
