@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Association, Adopter, Pet, Address, AdoptionForm
+from .models import Association, Adopter, Pet, Address, AdoptionForm, Image
 
 # Serializers define the API representation
 
@@ -20,6 +20,14 @@ class AssociationsSerializer(serializers.ModelSerializer) :
   class Meta:
     model = Association
     fields = '__all__'
+
+class AssociationsRegistSerializer(serializers.ModelSerializer) :
+  class Meta:
+    model = Association
+    fields = [
+      'name',
+      'email',
+    ]
 
 ## Adopter Serializers
 class AdoptersListSerializer(serializers.ModelSerializer) :
@@ -107,4 +115,14 @@ class AdopterAdoptionFormsSerializer(serializers.ModelSerializer) :
       'last_name',
       'adoption_forms',
     ]
-        
+
+## Image Serializers
+class AssociationsImagesSerializer(serializers.ModelSerializer) :
+  i_associations = AssociationsListSerializer
+
+  class Meta:
+    model = Image
+    fields = [
+      'image',
+      'i_associations',
+    ]

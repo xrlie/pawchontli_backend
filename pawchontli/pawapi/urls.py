@@ -38,6 +38,7 @@ from .views import (
   AssociationsViewSet,
   AdoptersViewSet,
   PetsViewSet,
+  UpdateAssociationsImagesAPIView,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -49,6 +50,7 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
   ## Image URL's
   # path('', include(router.urls)),
+  path('associations/<int:pk>/update_image/', UpdateAssociationsImagesAPIView.as_view(), name='update-associations-images'),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),

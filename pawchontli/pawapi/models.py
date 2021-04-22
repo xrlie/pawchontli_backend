@@ -48,8 +48,8 @@ class Association(models.Model) :
   created_at = models.DateTimeField(auto_now_add=True)
 
   # Relation
-  address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='associations')
-  image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='i_associations')
+  address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE, related_name='associations')
+  image = models.OneToOneField(Image, null=True, on_delete=models.CASCADE, related_name='i_associations')
 
   def __str__(self) :
     return f'{self.name}. Contact:{self.first_name_contact} {self.last_name_contact} at {self.email_contact}'
@@ -65,8 +65,8 @@ class Adopter(models.Model) :
   created_at = models.DateTimeField(auto_now_add=True)
 
   #Relation
-  address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='adopters')
-  image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='i_adopters') 
+  address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE, related_name='adopters')
+  image = models.OneToOneField(Image, null=True, on_delete=models.CASCADE, related_name='i_adopters') 
 
   def __str__(self) :
     return f'{self.first_name} {self.last_name}'
@@ -121,8 +121,8 @@ class Pet(models.Model) :
 
   # Relations
   association = models.ForeignKey(Association, on_delete=models.PROTECT, related_name='pets')
-  adopter = models.ForeignKey(Adopter, on_delete=models.PROTECT, related_name='adopter_pets')
-  image = models.ForeignKey(Image, on_delete=models.PROTECT, related_name='i_pets')
+  adopter = models.ForeignKey(Adopter,null=True, on_delete=models.PROTECT, related_name='adopter_pets')
+  image = models.ForeignKey(Image,null=True, on_delete=models.PROTECT, related_name='i_pets')
 
   def __str__(self) :
     return f'{self.name}, {self.character} {self.size} {self.gender} {self.species}'
