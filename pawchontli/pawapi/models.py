@@ -31,7 +31,7 @@ class Association(models.Model) :
 
 
   def __str__(self) :
-    return f'{self.name}. Contact:{self.first_name_contact} {self.last_name_contact} at {self.email_contact}'
+    return f'{self.name}. Contact:{self.first_name_contact} {self.last_name_contact}'
 
 class Adopter(models.Model) :
   """ Adopter Model """

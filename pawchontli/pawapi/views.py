@@ -17,7 +17,7 @@ from .serializers import (
   # Pet Serializers
   PetsListSerializer,
   PetsSerializer,
-
+  ViewPetsSerializer,
   # Adoption Form Serializers
   AdoptionFormsSerializer,
   # Relations Serializers
@@ -96,7 +96,7 @@ class CreatePetsAPIView(generics.CreateAPIView) :
 
 class RetrievePetsAPIView(generics.RetrieveAPIView) :
   queryset = Pet.objects.all()
-  serializer_class = PetsSerializer
+  serializer_class = ViewPetsSerializer
 
 class UpdatePetsAPIView(generics.UpdateAPIView) :
   queryset = Pet.objects.all()
