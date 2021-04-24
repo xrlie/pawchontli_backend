@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
 from rest_framework import generics, filters
-from .models import Association, Adopter, Pet, Address, AdoptionForm, Image
+from .models import Association, Adopter, Pet, AdoptionForm
 
 ## We import this additional model to implement the image handling
 from rest_framework.viewsets import ReadOnlyModelViewSet
@@ -17,25 +17,21 @@ from .serializers import (
   # Pet Serializers
   PetsListSerializer,
   PetsSerializer,
-  # Address Serializers
-  AddressesListSerializer,
-  AddressesSerializer,
+
   # Adoption Form Serializers
   AdoptionFormsSerializer,
   # Relations Serializers
   AssociationPetsSerializer,
-  AdopterPetsSerializer,
+  PetAdoptionFormsSerializer,
+
   AdopterAdoptionFormsSerializer,
-  # Image Serializers
-  AssociationsImagesSerializer,
+  
 )
 
 # Create your views here.
 
 ### Image handler Views
-class UpdateAssociationsImagesAPIView(generics.UpdateAPIView) :
-  queryset = Image.objects.all()
-  serializer_class = AssociationsImagesSerializer
+
 
 class AssociationsViewSet(ReadOnlyModelViewSet) :
   queryset = Association.objects.all()
@@ -110,26 +106,7 @@ class DestroyPetsAPIView(generics.DestroyAPIView) :
   queryset = Pet.objects.all()
   serializer_class = PetsSerializer
 
-## Address View's
-class ListAddressesAPIView(generics.ListAPIView) :
-  queryset = Address.objects.all()
-  serializer_class = AddressesListSerializer
 
-class CreateAddressesAPIView(generics.CreateAPIView) :
-  queryset = Address.objects.all()
-  serializer_class = AddressesSerializer
-
-class RetrieveAddressesAPIView(generics.RetrieveAPIView) :
-  queryset = Address.objects.all()
-  serializer_class = AddressesSerializer
-
-class UpdateAddressesAPIView(generics.UpdateAPIView) :
-  queryset = Address.objects.all()
-  serializer_class = AddressesSerializer
-
-class DestroyAddressesAPIView(generics.DestroyAPIView) :
-  queryset = Address.objects.all()
-  serializer_class = AddressesSerializer
 
 ## Adoption Form View's
 class ListAdoptionFormsAPIView(generics.ListAPIView) :
@@ -157,10 +134,11 @@ class RetrieveAssociationPetsAPIView(generics.RetrieveAPIView) :
   queryset = Association.objects.all()
   serializer_class = AssociationPetsSerializer
 
-class RetrieveAdopterPetsAPIView(generics.RetrieveAPIView) :
-  queryset = Adopter.objects.all()
-  serializer_class = AdopterPetsSerializer
-
 class RetrieveAdopterAdoptionFormsAPIView(generics.RetrieveAPIView) :
   queryset = Adopter.objects.all()
   serializer_class = AdopterAdoptionFormsSerializer
+
+
+class RetrievePetAdoptionFormsAPIView(generics.RetrieveAPIView) :
+  queryset = Pet.objects.all()
+  serializer_class = PetAdoptionFormsSerializer

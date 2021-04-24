@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Association, Adopter, Pet, Address, AdoptionForm, Image
+from .models import Association, Adopter, Pet, AdoptionForm
 
 # Serializers define the API representation
 
@@ -24,10 +24,7 @@ class AssociationsSerializer(serializers.ModelSerializer) :
 class AssociationsRegistSerializer(serializers.ModelSerializer) :
   class Meta:
     model = Association
-    fields = [
-      'name',
-      'email',
-    ]
+    fields = '__all__'
 
 ## Adopter Serializers
 class AdoptersListSerializer(serializers.ModelSerializer) :
@@ -59,26 +56,17 @@ class PetsSerializer(serializers.ModelSerializer) :
     model = Pet
     fields = '__all__'
 
-## Address Serializers
-class AddressesListSerializer(serializers.ModelSerializer) :
-  class Meta:
-    model = Address
-    fields = [
-      'id',
-      'zip_code',
-      'created_at',
-    ]
 
-class AddressesSerializer(serializers.ModelSerializer) :
-  class Meta:
-    model = Address
-    fields = '__all__'
+
+
 
 ## Adoption Forms Serializers
 class AdoptionFormsSerializer(serializers.ModelSerializer) :
   class Meta:
     model = AdoptionForm
     fields = '__all__'
+
+
 
 ## Relations Serializers
 class AssociationPetsSerializer(serializers.ModelSerializer) :
@@ -92,17 +80,7 @@ class AssociationPetsSerializer(serializers.ModelSerializer) :
       'pets',
     ]
 
-class AdopterPetsSerializer(serializers.ModelSerializer) :
-  adopter_pets = PetsListSerializer
 
-  class Meta:
-    model = Adopter
-    fields = [
-      'id',
-      'first_name',
-      'last_name',
-      'adopter_pets',
-    ]
 
 class AdopterAdoptionFormsSerializer(serializers.ModelSerializer) :
   adoption_forms = AdoptionFormsSerializer
@@ -116,13 +94,13 @@ class AdopterAdoptionFormsSerializer(serializers.ModelSerializer) :
       'adoption_forms',
     ]
 
-## Image Serializers
-class AssociationsImagesSerializer(serializers.ModelSerializer) :
-  i_associations = AssociationsListSerializer
+class PetAdoptionFormsSerializer(serializers.ModelSerializer) :
+  adoption_forms = AdoptionFormsSerializer
 
   class Meta:
-    model = Image
+    model= Pet
     fields = [
-      'image',
-      'i_associations',
+      'id',
+      'name',
+      'species',
     ]

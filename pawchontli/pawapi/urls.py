@@ -18,12 +18,6 @@ from .views import (
   RetrievePetsAPIView,
   UpdatePetsAPIView,
   DestroyPetsAPIView,
-  # Address View's
-  ListAddressesAPIView,
-  CreateAddressesAPIView,
-  RetrieveAddressesAPIView,
-  UpdateAddressesAPIView,
-  DestroyAddressesAPIView,
   # Adoption View's
   ListAdoptionFormsAPIView,
   CreateAdoptionFormsAPIView,
@@ -32,13 +26,8 @@ from .views import (
   DestroyAdoptionFormsAPIView,
   # Relation View's
   RetrieveAssociationPetsAPIView,
-  RetrieveAdopterPetsAPIView,
   RetrieveAdopterAdoptionFormsAPIView,
-  # Image handler
-  AssociationsViewSet,
-  AdoptersViewSet,
-  PetsViewSet,
-  UpdateAssociationsImagesAPIView,
+  RetrievePetAdoptionFormsAPIView,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -50,7 +39,6 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
   ## Image URL's
   # path('', include(router.urls)),
-  path('associations/<int:pk>/update_image/', UpdateAssociationsImagesAPIView.as_view(), name='update-associations-images'),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),
@@ -69,12 +57,6 @@ urlpatterns = [
   path('pets/<int:pk>/', RetrievePetsAPIView.as_view(), name='retrieve-pets'),
   path('pets/<int:pk>/update/', UpdatePetsAPIView.as_view(), name='update-pets'),
   path('pets/<int:pk>/destroy/', DestroyPetsAPIView.as_view(), name='destroy-pets'),
-  ## Address URL's
-  path('addresses/', ListAddressesAPIView.as_view(), name='list-addresses'),
-  path('addresses/create/', CreateAddressesAPIView.as_view(), name='create-addresses'),
-  path('addresses/<int:pk>/', RetrieveAddressesAPIView.as_view(), name='retrieve-addresses'),
-  path('addresses/<int:pk>/update/', UpdateAddressesAPIView.as_view(), name='update-addresses'),
-  path('addresses/<int:pk>/destroy/', DestroyAddressesAPIView.as_view(), name='destroy-addresses'),
   ## Adoption Form URL's
   path('adoption_forms/', ListAdoptionFormsAPIView.as_view(), name='list-adoption-forms'),
   path('adoption_forms/create/', CreateAdoptionFormsAPIView.as_view(), name='create-adoption-forms'),
@@ -83,6 +65,6 @@ urlpatterns = [
   path('adoption_forms/<int:pk>/destroy/', DestroyAdoptionFormsAPIView.as_view(), name='destroy-adoption-forms'),
   ## Relations URL's
   path('associations/<int:pk>/pets/', RetrieveAssociationPetsAPIView.as_view(), name='retrieve-association-pets'),
-  path('adopters/<int:pk>/pets/', RetrieveAdopterPetsAPIView.as_view(), name='retrieve-adopter-pets'),
+  path('pets/<int:pk>/adoption_forms/', RetrievePetAdoptionFormsAPIView.as_view(), name='retrieve-pets-adoption-forms'),
   path('adopters/<int:pk>/adoption_forms/', RetrieveAdopterAdoptionFormsAPIView.as_view(), name='retrieve-adopter-adoption-forms'),
 ]
