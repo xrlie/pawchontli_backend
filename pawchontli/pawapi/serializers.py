@@ -13,7 +13,7 @@ class AssociationsListSerializer(serializers.ModelSerializer) :
       'email',
       'first_name_contact',
       'last_name_contact',
-      'email_contact',
+      # 'email_contact',
     ]
 
 class AssociationsSerializer(serializers.ModelSerializer) :
@@ -34,6 +34,7 @@ class AdoptersListSerializer(serializers.ModelSerializer) :
       'id',
       'first_name',
       'last_name',
+      'image',
     ]
 
 class AdoptersSerializer(serializers.ModelSerializer) :
@@ -55,6 +56,25 @@ class PetsSerializer(serializers.ModelSerializer) :
   class Meta:
     model = Pet
     fields = '__all__'
+
+class ViewPetsSerializer(serializers.ModelSerializer) :
+  association = AssociationsListSerializer(many=False)
+  class Meta:
+    model = Pet
+    # fields = '__all__'
+    fields = [
+      'id',
+      'name',
+      'species',
+      'age',
+      'gender',
+      'size',
+      'character',
+      'story',
+      'special_needs',
+      'image',
+      'association',
+    ]
 
 
 
