@@ -40,27 +40,6 @@ from .views import (
 urlpatterns = [
   ## User Login 
   path('login/', CreateUserAPIView.as_view(), name='user-login'),
-  ## Reset Password
-  # path(
-  #   'reset_password/', 
-  #   auth_views.PasswordResetView.as_view(),#template_name='pawapi/password_reset.html'), 
-  #   name='reset_password'
-  #   ),
-  # path(
-  #   'reset_password_sent/', 
-  #   auth_views.PasswordResetDoneView.as_view(),#template_name='pawapi/password_reset_sent.html'), 
-  #   name='password_reset_done'
-  # ),
-  # path(
-  #   'reset/<uidb64>/<token>/', 
-  #   auth_views.PasswordResetConfirmView.as_view(),#template_name='pawapi/password_reset_form.html'), 
-  #   name='password_reset_confirm'
-  # ),
-  # path(
-  #   'reset_password_complete/', 
-  #   auth_views.PasswordResetCompleteView.as_view(),#template_name='pawapi/password_reset_done.html'), 
-  #   name='password_reset_complete'
-  # ),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),
