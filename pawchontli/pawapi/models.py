@@ -45,7 +45,7 @@ class Adopter(models.Model) :
   zip_code = models.CharField(max_length=20)
   neighbourhood = models.CharField(max_length=50)
   street_and_number = models.CharField(max_length=20)
-  story= models.TextField(max_length=2000)
+  # story= models.TextField(max_length=2000)
   image = models.ImageField(null=True, blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
 
