@@ -98,12 +98,23 @@ WSGI_APPLICATION = 'pawchontli.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # Local Database
+    # 'default': {
+    #     'ENGINE': getenv('DBENGINE'),
+    #     'NAME': getenv('DBNAME'),
+    #     'USER': getenv('DBUSER'),
+    #     'PASSWORD': getenv('DBPASSWORD'),
+    #     'HOST': getenv('DBHOST'),
+    #     'PORT': getenv('DBPORT'),
+    # }
+
+    # AWS Database
     'default': {
-        'ENGINE': getenv('DBENGINE'),
-        'NAME': getenv('DBNAME'),
-        'USER': getenv('DBUSER'),
-        'PASSWORD': getenv('DBPASSWORD'),
-        'HOST': getenv('DBHOST'),
+        'ENGINE': getenv('AWSDBENGINE'),
+        'NAME': getenv('AWSDBNAME'),
+        'USER': getenv('AWSDBUSER'),
+        'PASSWORD': getenv('AWSDBPASSWORD'),
+        'HOST': getenv('AWSDBHOST'),
         'PORT': getenv('DBPORT'),
     }
 }
