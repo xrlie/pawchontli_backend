@@ -90,7 +90,7 @@ class AdoptionFormsSerializer(serializers.ModelSerializer) :
 
 ## Relations Serializers
 class AssociationPetsSerializer(serializers.ModelSerializer) :
-  pets = PetsListSerializer
+  pets = PetsListSerializer(many=True)
 
   class Meta:
     model = Association
