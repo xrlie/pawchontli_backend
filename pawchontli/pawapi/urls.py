@@ -1,5 +1,7 @@
 from django.urls import path, include
 from .views import (
+  # User View
+  CreateUserAPIView,
   # Associations View's
   ListAssociationsAPIView,
   CreateAssociationsAPIView,
@@ -29,16 +31,13 @@ from .views import (
   RetrieveAdopterAdoptionFormsAPIView,
   RetrievePetAdoptionFormsAPIView,
 )
-from rest_framework.routers import DefaultRouter
 
-# router = DefaultRouter()
-# router.register(r'associations', AssociationsViewSet)
-# router.register(r'adopters', AdoptersViewSet)
-# router.register(r'pets', PetsViewSet)
+
+
 
 urlpatterns = [
-  ## Image URL's
-  # path('', include(router.urls)),
+  ## User Login 
+  path('login/', CreateUserAPIView.as_view(), name='user-login'),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),
