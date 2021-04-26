@@ -75,6 +75,7 @@ class RetrieveAdoptersAPIView(generics.RetrieveAPIView) :
 class UpdateAdoptersAPIView(generics.UpdateAPIView) :
   queryset = Adopter.objects.all()
   serializer_class = AdoptersSerializer
+  permission_classes = []
 
 class DestroyAdoptersAPIView(generics.DestroyAPIView) :
   queryset = Adopter.objects.all()
