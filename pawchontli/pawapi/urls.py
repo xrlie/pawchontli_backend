@@ -39,7 +39,7 @@ from .views import (
 
 urlpatterns = [
   ## User Login 
-  path('login/', CreateUserAPIView.as_view(), name='user-login'),
+  path('register/', CreateUserAPIView.as_view(), name='user-register'),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),

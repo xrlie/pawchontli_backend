@@ -19,13 +19,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken import views
 from django.contrib.auth import views as auth_views
+from pawapi import views as pa_views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API
     path('api/', include(('pawapi.urls', 'api'))),
-    path('api_generate_token/', views.obtain_auth_token),
+    path('api_generate_token/', pa_views.CustomAuthToken.as_view()),
     path(
     'reset_password/', 
     auth_views.PasswordResetView.as_view(template_name='pawapi/password_reset.html'), 
