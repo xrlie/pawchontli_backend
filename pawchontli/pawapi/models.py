@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from versatileimagefield.fields import VersatileImageField, PPOIField
 
 ## Types of relations
@@ -12,8 +13,7 @@ from versatileimagefield.fields import VersatileImageField, PPOIField
 
 class Association(models.Model) :
   """ Association Model """
-  email = models.EmailField(unique=True)
-  name = models.CharField(max_length=255)
+  user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, related_name='associations')
   first_name_contact = models.CharField(max_length=255)
   last_name_contact = models.CharField(max_length=255)
   phone = models.CharField(max_length=20, unique=True)
@@ -28,17 +28,12 @@ class Association(models.Model) :
   image = models.ImageField(null=True, blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
 
-
-
   def __str__(self) :
     return f'{self.name}. Contact:{self.first_name_contact} {self.last_name_contact}'
 
 class Adopter(models.Model) :
   """ Adopter Model """
-  email = models.EmailField(unique=True)
-  first_name = models.CharField(max_length=255, null=True)
-  last_name = models.CharField(max_length=255, null=True)
-  birthdate = models.DateField(null=True)
+  user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE, related_name='adopters')
   phone = models.CharField(max_length=20, null=True)
   state = models.CharField(max_length=50, null=True)
   city = models.CharField(max_length=50, null=True)
@@ -47,14 +42,9 @@ class Adopter(models.Model) :
   street_and_number = models.CharField(max_length=20, null=True)
   # story= models.TextField(max_length=2000)
   image = models.ImageField(null=True, blank=True)
-  created_at = models.DateTimeField(auto_now_add=True)
-
-  #Relation
-
-
-
+ 
   def __str__(self) :
-    return f'{self.first_name} {self.last_name}'
+    return f'{self.user.username}'
 
 class Pet(models.Model) :
   name = models.CharField(max_length=255)

@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from rest_framework.views import APIView
 
 from rest_framework import generics, filters
 from .models import Association, Adopter, Pet, AdoptionForm
@@ -13,7 +14,9 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .serializers import (
     # User Serializer
-    UsersSerializer,
+    AdoptersUsersSerializer,
+    AssociationsUsersSerializer,
+    # RegistAdoptersSerializer,
     # Association Serializers
     AssociationsListSerializer,
     AssociationsSerializer,
@@ -36,19 +39,55 @@ from .serializers import (
 # Create your views here.
 
 ### User Authentication
-class CreateUserAPIView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UsersSerializer
-    permission_classes = []
+class CreateAdopterUserAPIView(APIView):
+  serializer_class = AdoptersUsersSerializer
+  permission_classes = []
 
-@receiver(post_save, sender=User)
-def adopter_profile(sender, instance, created, **kwargs):
-  if created:
-    Adopter.objects.create(
-        email=instance.email, 
-        first_name=instance.username,
-      )
+  def post(self, request, *args, **kwargs):
+    serializer = self.serializer_class(
+        data=request.data, context={"request": request}
+    )
+    serializer.is_valid(raise_exception=True)
+    user = User.objects.create(username=serializer.validated_data['username'], email=serializer.validated_data['email'])
+    user.set_password(serializer.validated_data['password'])
+    user.save()
+    adopter = Adopter.objects.create(user=user)
+    return Response({"user_id": user.id, "adopter_id": adopter.id, "email": user.email})
 
+class CreateAssociationUserAPIView(APIView):
+  serializer_class = AdoptersUsersSerializer
+  permission_classes = []
+
+  def post(self, request, *args, **kwargs):
+    serializer = self.serializer_class(
+        data=request.data, context={"request": request}
+    )
+    serializer.is_valid(raise_exception=True)
+    user = User.objects.create(username=serializer.validated_data['username'], email=serializer.validated_data['email'])
+    user.set_password(serializer.validated_data['password'])
+    user.save()
+    association = Association.objects.create(user=user)
+    return Response({"user_id": user.id, "association_id": association.id, "email": user.email})
+
+class AssociationAuthToken(ObtainAuthToken):
+  def post(self, request, *args, **kwargs):
+    serializer = self.serializer_class(
+      data=request.data, context={'request': request}
+    )
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data["user"]
+    token, created = Token.objects.get_or_create(user=user)
+    return Response({"token":token.key, "association_id":user.associations.id, "email": user.email})
+
+class AdopterAuthToken(ObtainAuthToken):
+  def post(self, request, *args, **kwargs):
+    serializer = self.serializer_class(
+      data=request.data, context={'request': request}
+    )
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data["user"]
+    token, created = Token.objects.get_or_create(user=user)
+    return Response({"token":token.key, "adopter_id":user.adopters.id, "email": user.email})
 
 class CustomAuthToken(ObtainAuthToken):
   def post(self, request, *args, **kwargs):
@@ -110,6 +149,7 @@ class RetrieveAdoptersAPIView(generics.RetrieveAPIView):
 class UpdateAdoptersAPIView(generics.UpdateAPIView):
     queryset = Adopter.objects.all()
     serializer_class = AdoptersSerializer
+    permission_classes = []
 
 
 class DestroyAdoptersAPIView(generics.DestroyAPIView):

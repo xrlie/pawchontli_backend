@@ -5,21 +5,41 @@ from .models import Association, Adopter, Pet, AdoptionForm
 # Serializers define the API representation
 
 ## User Serializer
-class UsersSerializer(serializers.ModelSerializer) :
-    class Meta:
-        model = User
-        fields = [
-            'username',
-            'email',
-            'password',
-        ]
-        extra_kwargs = {
-            'password':{'write_only':True}
-        }
+class UsersSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields = [
+      'username',
+      'first_name',
+      'last_name',
+      'email',
+    ]
 
-    def create(self, validate_data) :
-        user = User.objects.create_user(**validate_data)
-        return user
+class AdoptersUsersSerializer(serializers.Serializer):
+  username = serializers.CharField(max_length=255)
+  email = serializers.EmailField()
+  password = serializers.CharField(max_length=50)
+
+class AssociationsUsersSerializer(serializers.Serializer):
+  username = serializers.CharField(max_length=255)
+  email = serializers.EmailField()
+  password = serializers.CharField(max_length=50)
+
+
+
+# class RegistAdoptersSerializer(serializers.ModelSerializer) :
+#     user = UsersSerializer
+#     class Meta:
+#         model = Adopter
+#         fields = [
+#           'user',
+#           'first_name',
+#           'email',
+#         ]
+#     def create(self, validated_data) :
+#         adopter = Adopter.objects.create(**validated_data)
+#         print(validated_data)
+#         return adopter
 
 ## Association Serializers
 class AssociationsListSerializer(serializers.ModelSerializer) :
@@ -46,16 +66,17 @@ class AssociationsRegistSerializer(serializers.ModelSerializer) :
 
 ## Adopter Serializers
 class AdoptersListSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer(many=False)
   class Meta:
     model = Adopter
     fields = [
       'id',
-      'first_name',
-      'last_name',
+      'user',
       'image',
     ]
 
 class AdoptersSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer
   class Meta:
     model = Adopter
     fields = '__all__'

@@ -3,7 +3,10 @@ from django.contrib.auth import views as auth_views
 
 from .views import (
   # User View
-  CreateUserAPIView,
+  CreateAdopterUserAPIView,
+  CreateAssociationUserAPIView,
+  AssociationAuthToken,
+  AdopterAuthToken,
   # Associations View's
   ListAssociationsAPIView,
   CreateAssociationsAPIView,
@@ -39,7 +42,10 @@ from .views import (
 
 urlpatterns = [
   ## User Login 
-  path('register/', CreateUserAPIView.as_view(), name='user-register'),
+  path('register/adopter/', CreateAdopterUserAPIView.as_view(), name='adopter-register'),
+  path('login/adopter/', AdopterAuthToken.as_view(), name='adopter-login'),
+  path('register/association/', CreateAssociationUserAPIView.as_view(), name='association-register'),
+  path('login/association/', AssociationAuthToken.as_view(), name='association-login'),
   ## Associations URL's
   path('associations/', ListAssociationsAPIView.as_view(), name='list-associations'),
   path('associations/create/', CreateAssociationsAPIView.as_view(), name='create-associations'),
