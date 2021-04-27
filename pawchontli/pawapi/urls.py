@@ -32,6 +32,7 @@ from .views import (
   UpdateAdoptionFormsAPIView,
   DestroyAdoptionFormsAPIView,
   # Relation View's
+  CreateAssociationsPetsAPIView,
   RetrieveAssociationPetsAPIView,
   RetrieveAdopterAdoptionFormsAPIView,
   RetrievePetAdoptionFormsAPIView,
@@ -71,6 +72,7 @@ urlpatterns = [
   path('adoption_forms/<int:pk>/update/', UpdateAdoptionFormsAPIView.as_view(), name='update-adoption-forms'),
   path('adoption_forms/<int:pk>/destroy/', DestroyAdoptionFormsAPIView.as_view(), name='destroy-adoption-forms'),
   ## Relations URL's
+  path('associations/<int:pk>/create_pet/', CreateAssociationsPetsAPIView.as_view(), name='create-association-pet'),
   path('associations/<int:pk>/pets/', RetrieveAssociationPetsAPIView.as_view(), name='retrieve-association-pets'),
   path('pets/<int:pk>/adoption_forms/', RetrievePetAdoptionFormsAPIView.as_view(), name='retrieve-pets-adoption-forms'),
   path('adopters/<int:pk>/adoption_forms/', RetrieveAdopterAdoptionFormsAPIView.as_view(), name='retrieve-adopter-adoption-forms'),

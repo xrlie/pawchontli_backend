@@ -26,35 +26,20 @@ class AssociationsUsersSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=50)
 
 
-
-# class RegistAdoptersSerializer(serializers.ModelSerializer) :
-#     user = UsersSerializer
-#     class Meta:
-#         model = Adopter
-#         fields = [
-#           'user',
-#           'first_name',
-#           'email',
-#         ]
-#     def create(self, validated_data) :
-#         adopter = Adopter.objects.create(**validated_data)
-#         print(validated_data)
-#         return adopter
-
 ## Association Serializers
 class AssociationsListSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer(many=False)
   class Meta:
     model = Association
     fields = [
       'id',
-      'name',
-      'email',
+      'user',
       'first_name_contact',
       'last_name_contact',
-      # 'email_contact',
     ]
 
 class AssociationsSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer(many=False)
   class Meta:
     model = Association
     fields = '__all__'
@@ -89,6 +74,7 @@ class PetsListSerializer(serializers.ModelSerializer) :
       'id',
       'name',
       'species',
+      'image',
     ]
 
 class PetsSerializer(serializers.ModelSerializer) :
@@ -129,13 +115,14 @@ class AdoptionFormsSerializer(serializers.ModelSerializer) :
 
 ## Relations Serializers
 class AssociationPetsSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer(many=False)
   pets = PetsListSerializer(many=True)
 
   class Meta:
     model = Association
     fields = [
       'id',
-      'name',
+      'user',
       'pets',
     ]
 
@@ -163,3 +150,49 @@ class PetAdoptionFormsSerializer(serializers.ModelSerializer) :
       'name',
       'species',
     ]
+
+## Prueba
+class prueba(serializers.Serializer):
+  association_id = serializers.CharField(max_length=50)
+  name = serializers.CharField(max_length=255)
+  species = serializers.CharField(max_length=50)
+  gender = serializers.CharField(max_length=10)
+  size = serializers.CharField(max_length=50)
+  character = serializers.CharField(max_length=30)
+  story = serializers.CharField(max_length=1000)
+  special_needs = serializers.CharField(max_length=1000)
+  image = serializers.ImageField()
+  
+  # association = AssociationsListSerializer(many=True)
+  # class Meta:
+  #   model = Pet
+  #   fields = [
+  #     'association',
+  #     'id',
+  #     'name',
+  #     'species',
+  #     'age',
+  #     'gender',
+  #     'size',
+  #     'character',
+  #     'story',
+  #     'special_needs',
+  #     'image',
+  #   ]
+
+## Pet creation from Association
+# class AssociationCreatePetSerializer(serializers.ModelSerializer) :
+#   pets = PetsSerializer(many=True)
+#   class Meta:
+#     model = Association
+#     fields = [
+#       'id',
+#       'name',
+#       'pets',
+#     ]
+#     def create(self, validated_data):
+#       pets_data = validated_data.pop('pets')
+#       album = Album.objects.get(self.reque)
+#       for track_data in tracks_data:
+#           Track.objects.create(album=album, **track_data)
+#       return album

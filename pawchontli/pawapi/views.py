@@ -34,6 +34,8 @@ from .serializers import (
     AssociationPetsSerializer,
     PetAdoptionFormsSerializer,
     AdopterAdoptionFormsSerializer,
+    ## Prueba
+    prueba,
 )
 
 # Create your views here.
@@ -99,11 +101,28 @@ class CustomAuthToken(ObtainAuthToken):
     token, created = Token.objects.get_or_create(user=user)
     return Response({"token": token.key, "user_id": user.pk, "email": user.email})
 
+## Código prueba
+class CreateAssociationsPetsAPIView(APIView) :
+  # queryset = Association.objects.all()
+  serializer_class = prueba
+  permission_classes = []
+  
+  def post(self, request, *args, **kwargs):
+    serializer = self.serializer_class(
+        data=request.data, context={"request": request}
+    )
+    serializer.is_valid(raise_exception=True)
+    association = Association.objects.get(id=serializer.validated_data['association_id'])
+    serializer.validated_data.pop('association_id')
+    pet = Pet.objects.create(association=association,**serializer.validated_data)
+    return Response({"association_id": association.id, "pet_id": pet.id})
+
 
 ## Association Views
 class ListAssociationsAPIView(generics.ListAPIView):
-    queryset = Association.objects.all()
-    serializer_class = AssociationsListSerializer
+  queryset = Association.objects.all()
+  serializer_class = AssociationsListSerializer
+  permission_classes = []
 
 
 class CreateAssociationsAPIView(generics.CreateAPIView):
@@ -114,6 +133,7 @@ class CreateAssociationsAPIView(generics.CreateAPIView):
 class RetrieveAssociationsAPIView(generics.RetrieveAPIView):
     queryset = Association.objects.all()
     serializer_class = AssociationsSerializer
+    permission_classes = []
 
 
 class UpdateAssociationsAPIView(generics.UpdateAPIView):
@@ -161,6 +181,7 @@ class DestroyAdoptersAPIView(generics.DestroyAPIView):
 class ListPetsAPIView(generics.ListAPIView):
     queryset = Pet.objects.all()
     serializer_class = PetsListSerializer
+    permission_classes = []
 
 
 class CreatePetsAPIView(generics.CreateAPIView):
