@@ -50,7 +50,7 @@ class CreateAdopterUserAPIView(APIView):
         data=request.data, context={"request": request}
     )
     serializer.is_valid(raise_exception=True)
-    user = User.objects.create(username=serializer.validated_data['username'], email=serializer.validated_data['email'])
+    user = User.objects.create(username=serializer.validated_data['username'], first_name=serializer.validated_data['first_name'],   last_name=serializer.validated_data['last_name'], email=serializer.validated_data['email'])
     user.set_password(serializer.validated_data['password'])
     user.save()
     adopter = Adopter.objects.create(user=user)

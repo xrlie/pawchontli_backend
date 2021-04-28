@@ -17,6 +17,8 @@ class UsersSerializer(serializers.ModelSerializer):
 
 class AdoptersUsersSerializer(serializers.Serializer):
   username = serializers.CharField(max_length=255)
+  first_name = serializers.CharField(max_length=255)
+  last_name = serializers.CharField(max_length=255)
   email = serializers.EmailField()
   password = serializers.CharField(max_length=50)
 
