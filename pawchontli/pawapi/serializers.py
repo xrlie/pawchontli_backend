@@ -61,7 +61,7 @@ class AdoptersListSerializer(serializers.ModelSerializer) :
     ]
 
 class AdoptersSerializer(serializers.ModelSerializer) :
-  user = UsersSerializer
+  user = UsersSerializer(many=False)
   class Meta:
     model = Adopter
     fields = '__all__'
@@ -129,14 +129,14 @@ class AssociationPetsSerializer(serializers.ModelSerializer) :
 
 
 class AdopterAdoptionFormsSerializer(serializers.ModelSerializer) :
+  user = UsersSerializer(many=False)
   adoption_forms = AdoptionFormsSerializer
 
   class Meta:
     model = Adopter
     fields = [
       'id',
-      'first_name',
-      'last_name',
+      'user',
       'adoption_forms',
     ]
 
