@@ -15,7 +15,7 @@ from django.dispatch import receiver
 #       subject='Welcome to Pawchontli',
 #       html_content='<strong>We hope you and your new friend like each other</strong>')
 #     try:
-#         sg = SendGridAPIClient('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')
+#         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
 #         response = sg.send(message)
 #         print(response.status_code)
 #         print(response.body)
