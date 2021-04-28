@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'versatileimagefield',
+    'storages',
 
 ]
 
@@ -174,3 +175,14 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'paw.chontli@gmail.com'
 EMAIL_HOST_PASSWORD = getenv('PAWPASSWORD')
+
+# S3 Bucket Config
+AWS_ACCESS_KEY_ID = getenv('AWSKEY')
+AWS_SECRET_ACCESS_KEY = getenv('AWSSECRETKEY')
+AWS_STORAGE_BUCKET_NAME = getenv('AWSBUCKETNAME')
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_REGION_NAME = "us-east-2"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
