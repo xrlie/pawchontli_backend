@@ -192,6 +192,7 @@ class CreatePetsAPIView(generics.CreateAPIView):
 class RetrievePetsAPIView(generics.RetrieveAPIView):
     queryset = Pet.objects.all()
     serializer_class = ViewPetsSerializer
+    permission_classes = []
 
 
 class UpdatePetsAPIView(generics.UpdateAPIView):
@@ -234,6 +235,7 @@ class DestroyAdoptionFormsAPIView(generics.DestroyAPIView):
 class RetrieveAssociationPetsAPIView(generics.RetrieveAPIView):
     queryset = Association.objects.all()
     serializer_class = AssociationPetsSerializer
+    permission_classes = []
 
 
 class RetrieveAdopterAdoptionFormsAPIView(generics.RetrieveAPIView):
