@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(getenv('DJANGO_DEBUG').lower() == 'false')
+DEBUG = bool(getenv('DJANGO_DEBUG').lower() == 'true')
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Custom apps
-    'pawapi',
+    'pawapi.apps.PawapiConfig',
     # Installed apps
     'rest_framework',
     'rest_framework.authtoken',
@@ -117,6 +117,10 @@ DATABASES = {
         'PASSWORD': getenv('AWSDBPASSWORD'),
         'HOST': getenv('AWSDBHOST'),
         'PORT': getenv('DBPORT'),
+        'OPTIONS': {
+            'sslmode': 'disable',
+            'gssencmode': 'disable',
+        },
     }
 }
 
@@ -158,6 +162,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
