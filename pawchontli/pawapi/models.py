@@ -117,6 +117,12 @@ class AdoptionForm (models.Model) :
   pet_responsable = models.TextField(max_length=1000)
   veterinarian = models.TextField(max_length=500)
   created_at = models.DateTimeField(auto_now_add=True)
+  STATUS_FORM = (
+    ('Pending','Pending'),
+    ('Approved','Approved'),
+    ('Rejected','Rejected'),
+  )
+  status = models.CharField(max_length=50, choices=STATUS_FORM, default='Pending')
 
   # Relations
   adopter = models.ForeignKey(Adopter, on_delete=models.CASCADE, related_name='adoption_forms')
