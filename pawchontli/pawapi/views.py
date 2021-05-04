@@ -214,6 +214,7 @@ class ListAdoptionFormsAPIView(generics.ListAPIView):
 class CreateAdoptionFormsAPIView(generics.CreateAPIView):
     queryset = AdoptionForm.objects.all()
     serializer_class = AdoptionFormsSerializer
+    permission_classes = []
 
 
 class RetrieveAdoptionFormsAPIView(generics.RetrieveAPIView):
