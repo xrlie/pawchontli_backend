@@ -30,6 +30,7 @@ from .serializers import (
     ViewPetsSerializer,
     # Adoption Form Serializers
     AdoptionFormsSerializer,
+    UpdateAdoptionFormsSerializer,
     # Relations Serializers
     AssociationPetsSerializer,
     PetAdoptionFormsSerializer,
@@ -57,7 +58,7 @@ class CreateAdopterUserAPIView(APIView):
     return Response({"user_id": user.id, "adopter_id": adopter.id, "email": user.email})
 
 class CreateAssociationUserAPIView(APIView):
-  serializer_class = AdoptersUsersSerializer
+  serializer_class = AssociationsUsersSerializer
   permission_classes = []
 
   def post(self, request, *args, **kwargs):
@@ -209,6 +210,7 @@ class DestroyPetsAPIView(generics.DestroyAPIView):
 class ListAdoptionFormsAPIView(generics.ListAPIView):
     queryset = AdoptionForm.objects.all()
     serializer_class = AdoptionFormsSerializer
+    permission_classes = []
 
 
 class CreateAdoptionFormsAPIView(generics.CreateAPIView):
@@ -220,11 +222,13 @@ class CreateAdoptionFormsAPIView(generics.CreateAPIView):
 class RetrieveAdoptionFormsAPIView(generics.RetrieveAPIView):
     queryset = AdoptionForm.objects.all()
     serializer_class = AdoptionFormsSerializer
+    permission_classes = []
 
 
 class UpdateAdoptionFormsAPIView(generics.UpdateAPIView):
     queryset = AdoptionForm.objects.all()
-    serializer_class = AdoptionFormsSerializer
+    serializer_class = UpdateAdoptionFormsSerializer
+    permission_classes = []
 
 
 class DestroyAdoptionFormsAPIView(generics.DestroyAPIView):
