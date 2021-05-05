@@ -40,9 +40,11 @@ class Adopter(models.Model) :
   zip_code = models.CharField(max_length=20, null=True)
   neighbourhood = models.CharField(max_length=50, null=True)
   street_and_number = models.CharField(max_length=20, null=True)
-  # story= models.TextField(max_length=2000)
+  story= models.TextField(max_length=2000, null=True)
+  birthdate = models.DateField(auto_now=True)
+  ocupation = models.CharField(max_length=50, null=True)
   image = models.ImageField(null=True, blank=True)
- 
+
   def __str__(self) :
     return f'{self.user.username}'
 
