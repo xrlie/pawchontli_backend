@@ -109,8 +109,8 @@ class ViewPetsSerializer(serializers.ModelSerializer) :
 
 ## Adoption Forms Serializers
 class AdoptionFormsSerializer(serializers.ModelSerializer) :
-  adopter = AdoptersSerializer(many=False)
-  pet = ViewPetsSerializer(many=False)
+  adopter = AdoptersSerializer#(many=False)
+  pet = ViewPetsSerializer#(many=False)
   
   class Meta:
     model = AdoptionForm

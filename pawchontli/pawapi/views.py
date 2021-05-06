@@ -80,7 +80,7 @@ class AssociationAuthToken(ObtainAuthToken):
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data["user"]
     token, created = Token.objects.get_or_create(user=user)
-    return Response({"token":token.key, "association_id":user.associations.id, "email": user.email})
+    return Response({"token":token.key, "association_id":user.associations.id, "email": user.email, "is_adopter":False})
 
 class AdopterAuthToken(ObtainAuthToken):
   def post(self, request, *args, **kwargs):
@@ -90,7 +90,7 @@ class AdopterAuthToken(ObtainAuthToken):
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data["user"]
     token, created = Token.objects.get_or_create(user=user)
-    return Response({"token":token.key, "adopter_id":user.adopters.id, "email": user.email})
+    return Response({"token":token.key, "adopter_id":user.adopters.id, "email": user.email, "is_adopter":True})
 
 class CustomAuthToken(ObtainAuthToken):
   def post(self, request, *args, **kwargs):
