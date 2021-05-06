@@ -57,7 +57,7 @@ class CreateAdopterUserAPIView(APIView):
     return Response({"user_id": user.id, "adopter_id": adopter.id, "email": user.email})
 
 class CreateAssociationUserAPIView(APIView):
-  serializer_class = AdoptersUsersSerializer
+  serializer_class = AssociationsUsersSerializer
   permission_classes = []
 
   def post(self, request, *args, **kwargs):
@@ -164,12 +164,13 @@ class CreateAdoptersAPIView(generics.CreateAPIView):
 class RetrieveAdoptersAPIView(generics.RetrieveAPIView):
     queryset = Adopter.objects.all()
     serializer_class = AdoptersSerializer
+    permission_classes = []
 
 
 class UpdateAdoptersAPIView(generics.UpdateAPIView):
     queryset = Adopter.objects.all()
     serializer_class = AdoptersSerializer
-    permission_classes = []
+    
 
 
 class DestroyAdoptersAPIView(generics.DestroyAPIView):

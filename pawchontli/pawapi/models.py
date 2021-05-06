@@ -42,6 +42,10 @@ class Adopter(models.Model) :
   street_and_number = models.CharField(max_length=20, null=True)
   # story= models.TextField(max_length=2000)
   image = models.ImageField(null=True, blank=True)
+  occupation = models.TextField(max_length=1000, null=True)
+  story = models.TextField(max_length=1000, null=True)
+  birthdate= models.DateTimeField(null=True)
+
  
   def __str__(self) :
     return f'{self.user.username}'
