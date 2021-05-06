@@ -40,7 +40,9 @@ class Adopter(models.Model) :
   zip_code = models.CharField(max_length=20, null=True)
   neighbourhood = models.CharField(max_length=50, null=True)
   street_and_number = models.CharField(max_length=20, null=True)
-  # story= models.TextField(max_length=2000)
+  story= models.TextField(max_length=2000, null=True)
+  birthdate = models.DateField(auto_now=True)
+  occupation = models.CharField(max_length=50, null=True)
   image = models.ImageField(null=True, blank=True)
   occupation = models.TextField(max_length=1000, null=True)
   story = models.TextField(max_length=1000, null=True)
@@ -121,6 +123,12 @@ class AdoptionForm (models.Model) :
   pet_responsable = models.TextField(max_length=1000)
   veterinarian = models.TextField(max_length=500)
   created_at = models.DateTimeField(auto_now_add=True)
+  STATUS_FORM = (
+    ('Pending','Pending'),
+    ('Approved','Approved'),
+    ('Rejected','Rejected'),
+  )
+  status = models.CharField(max_length=50, choices=STATUS_FORM, default='Pending')
 
   # Relations
   adopter = models.ForeignKey(Adopter, on_delete=models.CASCADE, related_name='adoption_forms')
