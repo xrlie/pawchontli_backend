@@ -50,7 +50,7 @@ class Adopter(models.Model) :
 
  
   def __str__(self) :
-    return f'{self.user.username}'
+    return f'{self.user.first_name} {self.user.last_name}'
 
 class Pet(models.Model) :
   name = models.CharField(max_length=255)
@@ -106,7 +106,7 @@ class Pet(models.Model) :
 
 
   def __str__(self) :
-    return f'{self.name}, {self.character} {self.size} {self.gender} {self.species}'
+    return f'{self.name}, {self.species}'
 
 class AdoptionForm (models.Model) :
   amount_pets_today = models.CharField(max_length=10)

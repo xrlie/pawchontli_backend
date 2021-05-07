@@ -145,6 +145,34 @@ class AdoptionFormsSerializer(serializers.ModelSerializer) :
       'created_at',
     ]
 
+class ListAdoptionFormSerializer(serializers.ModelSerializer):
+  adopter = serializers.StringRelatedField(many=False)    
+  pet = serializers.StringRelatedField(many=False)  
+  class Meta:
+    model = AdoptionForm
+    fields = [
+      'id',
+      'amount_pets_today',
+      'which_pets_today',
+      'amount_pets_past',
+      'story_pets_past',
+      'everyone_agrees',
+      'allowed_to_own',
+      'if_change_address',
+      'average_age',
+      'place_of_sleep',
+      'time_by_itself',
+      'petcare_awareness',
+      'pet_responsable',
+      'veterinarian',
+      'adopter',
+      'pet',
+      'created_at',
+    
+
+    ]
+
+
 class UpdateAdoptionFormsSerializer(serializers.ModelSerializer):
   class Meta:
     model = AdoptionForm
