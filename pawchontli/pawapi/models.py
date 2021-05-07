@@ -56,44 +56,34 @@ class Pet(models.Model) :
   name = models.CharField(max_length=255)
 
   PET_SPECIES = (
-    ('cat', 'Cat'),
-    ('dog', 'Dog'),
+    ('gato', 'Gato'),
+    ('perro', 'Perro'),
   )
   species = models.CharField(max_length=50, choices=PET_SPECIES, default='dog')
   age = models.CharField(max_length=40)
   
   # The declaration of these variables is for human readability purposes 
-  MALE = 'M'
-  FEMALE = 'F'
+  
   PET_GENDER = (
-    (MALE, 'Male'),
-    (FEMALE, 'Female'),
+    ('Macho', 'Macho'),
+    ('Hembra', 'Hembra'),
   )
   gender = models.CharField(max_length=10, choices=PET_GENDER, default=FEMALE)
 
-  SMALL = 'S'
-  MEDIUM = 'M'
-  LARGE = 'L'
   PET_SIZE = (
-    (SMALL, 'Small'),
-    (MEDIUM, 'Medium'),
-    (LARGE, 'Large'),
+    ('Pequeño', 'Pequeño'),
+    ('Mediano', 'Mediano'),
+    ('Grande', 'Grande'),
   )
   size = models.CharField(max_length=50, choices=PET_SIZE, default=SMALL)
 
-  PLAYFUL = 'P'
-  SHY = 'S'
-  INDEPENDENT = 'I'
-  FRIENDLY = 'F'
-  NAUGHTY = 'N'
-  LAZY = 'L'
   PET_CHARACTER = (
-    (PLAYFUL, 'Playful'),
-    (SHY, 'Shy'),
-    (INDEPENDENT, 'Independent'),
-    (FRIENDLY, 'Friendly'),
-    (NAUGHTY, 'Naughty'),
-    (LAZY, 'Lazy'),
+    ('Juguetón', 'Juguetón'),
+    ('Miedoso', 'Miedoso'),
+    ('Independiente', 'Independiente'),
+    ('Amistoso', 'Amistoso'),
+    ('Travieso', 'Travieos'),
+    ('Flojo', 'Flojo'),
   )
   character = models.CharField(max_length=30, choices=PET_CHARACTER, default=PLAYFUL)
   story = models.TextField(max_length=1000)
