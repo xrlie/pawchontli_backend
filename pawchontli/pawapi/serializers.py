@@ -82,7 +82,18 @@ class PetsListSerializer(serializers.ModelSerializer) :
 class PetsSerializer(serializers.ModelSerializer) :
   class Meta:
     model = Pet
-    fields = '__all__'
+    fields = [
+      'id',
+      'name',
+      'species',
+      'age',
+      'gender',
+      'size',
+      'character',
+      'story',
+      'special_needs',
+      'association',
+    ]
 
 class ViewPetsSerializer(serializers.ModelSerializer) :
   association = AssociationsListSerializer(many=False)
@@ -131,6 +142,7 @@ class AdoptionFormsSerializer(serializers.ModelSerializer) :
       'veterinarian',
       'adopter',
       'pet',
+      'created_at',
     ]
 
 class UpdateAdoptionFormsSerializer(serializers.ModelSerializer):
