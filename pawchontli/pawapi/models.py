@@ -68,14 +68,14 @@ class Pet(models.Model) :
     ('Macho', 'Macho'),
     ('Hembra', 'Hembra'),
   )
-  gender = models.CharField(max_length=10, choices=PET_GENDER, default=FEMALE)
+  gender = models.CharField(max_length=10, choices=PET_GENDER, default='Hembra')
 
   PET_SIZE = (
     ('Pequeño', 'Pequeño'),
     ('Mediano', 'Mediano'),
     ('Grande', 'Grande'),
   )
-  size = models.CharField(max_length=50, choices=PET_SIZE, default=SMALL)
+  size = models.CharField(max_length=50, choices=PET_SIZE, default='Pequeño')
 
   PET_CHARACTER = (
     ('Juguetón', 'Juguetón'),
@@ -85,7 +85,7 @@ class Pet(models.Model) :
     ('Travieso', 'Travieos'),
     ('Flojo', 'Flojo'),
   )
-  character = models.CharField(max_length=30, choices=PET_CHARACTER, default=PLAYFUL)
+  character = models.CharField(max_length=30, choices=PET_CHARACTER, default='Juguetón')
   story = models.TextField(max_length=1000)
   special_needs = models.TextField(max_length=1000)
   image = models.ImageField(null=True, blank=True)
