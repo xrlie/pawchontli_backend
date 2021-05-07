@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import status
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from rest_framework.views import APIView
@@ -209,15 +210,41 @@ class DestroyPetsAPIView(generics.DestroyAPIView):
 
 ## Adoption Form View's
 class ListAdoptionFormsAPIView(generics.ListAPIView):
-    queryset = AdoptionForm.objects.all()
+    # queryset = Pet.objects.all()
     serializer_class = AdoptionFormsSerializer
-    permission_classes = []
+    # permission_classes = []
+
+    def get(self,request):
+        association=Association.objects.get(user=request.user)
+        pets=Pet.objects.filter(association=association).exclude(adoption_pets__isnull=True)
+        queryset= AdoptionForm.objects.filter(pet__in=pets)
+        # print([pet.adoption_pets for pet in queryset.all()])
+        serializer=AdoptionFormsSerializer(queryset, many=True)
+       
+        return Response(serializer.data)
+    
+
+
+        
 
 
 class CreateAdoptionFormsAPIView(generics.CreateAPIView):
     queryset = AdoptionForm.objects.all()
     serializer_class = AdoptionFormsSerializer
-    permission_classes = []
+    
+    def post(self, request):
+        request.data["adopter"]=request.user.id
+        serializer=AdoptionFormsSerializer(data=request.data)
+        print(request.user.id)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+    
+        
+
+    
+    
 
 
 class RetrieveAdoptionFormsAPIView(generics.RetrieveAPIView):
